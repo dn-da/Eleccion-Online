@@ -88,7 +88,7 @@ class Candidato(db.Model):
 
 ```python
 class ElectorService(ABC):
-    @abstractmethod
+    @abstractmethod             
     def get_elector_by_id(self, id):
         pass
 
