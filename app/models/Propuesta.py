@@ -3,22 +3,20 @@ from app import ma
 
 class Propuesta(db.Model):
     __tablename__ = 'propuesta'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    id_candidato = db.Column(db.Integer, db.ForeignKey('candidato.id'), nullable=False)
-    propuesta = db.Column(db.Text, nullable=False)
+    id_propuesta = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descripcion = db.Column(db.String(255), nullable=True)
+    id_lista = db.Column(db.Integer, db.ForeignKey('lista_candidato.id_lista'), nullable=True)
+    
+    def __init__(self, descripcion, id_lista):
+        self.descripcion = descripcion
+        self.id_lista = id_lista
 
-    def __init__(self, id_candidato, propuesta):
-        self.id_candidato = id_candidato
-        self.propuesta = propuesta
-    from app import ma
 
-class PropuestaSchema(ma.SQLAlchemyAutoSchema):
+class PropuestaSchema(ma.Schema):
     class Meta:
-        model = Propuesta
         fields = (
-            'id',
-            'id_candidato',
-            'propuesta'
+            'id_propuesta',
+            'descripcion',
+            'id_lista_candidato'
         )
-
 

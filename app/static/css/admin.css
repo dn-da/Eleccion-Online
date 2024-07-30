@@ -1,0 +1,13 @@
+.sidebar {
+    height: 100vh; /* Altura completa de la ventana */
+    width: 250px; /* Ancho del menú lateral */
+    position: fixed; /* Fijo en la pantalla */
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa; /* Color de fondo del menú */
+    padding-top: 20px; /* Espaciado superior */
+}
+.content {
+    margin-left: 250px; /* Ancho del menú lateral para dejar espacio al contenido */
+    padding: 20px; /* Espaciado interno del contenido */
+}

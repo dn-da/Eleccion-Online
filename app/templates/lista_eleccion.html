@@ -7,22 +7,30 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Fecha</th>
-                <th>Hora Inicio</th>
-                <th>Hora Fin</th>
                 <th>Estado</th>
-                <th>Descripción</th>
+                <th>Propuestas</th>
+                <th>Candidatos</th>
             </tr>
         </thead>
         <tbody>
-            {% for eleccion in elecciones %}
+            {% for lista in listas %}
             <tr>
-                <td>{{ eleccion.id_eleccion }}</td>
-                <td>{{ eleccion.fecha }}</td>
-                <td>{{ eleccion.hora_inicio }}</td>
-                <td>{{ eleccion.hora_fin }}</td>
-                <td>{{ eleccion.estado }}</td>
-                <td>{{ eleccion.descripcion }}</td>
+                <td>{{ lista.id_lista }}</td>
+                <td>{{ lista.estado }}</td>
+                <td>
+                    <ul>
+                        {% for propuesta in lista.propuestas %}
+                            <li>{{ propuesta.descripcion }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% for candidato in lista.candidatos %}
+                            <li>{{ candidato.nombre }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
             </tr>
             {% endfor %}
         </tbody>

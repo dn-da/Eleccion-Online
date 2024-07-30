@@ -1,5 +1,6 @@
-from app import db
 import bcrypt
+
+from app import db
 
 class Elector(db.Model):
     __tablename__ = 'elector'

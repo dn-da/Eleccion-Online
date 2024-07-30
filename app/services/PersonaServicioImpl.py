@@ -1,4 +1,5 @@
 import logging
+
 from app.models.Elector import Elector
 from app import db
 from app.services.IPersonaServicio import ElectorService
@@ -52,3 +53,4 @@ class ElectorServiceImpl(ElectorService):
             db.session.rollback()
             logger.error(f'Error al eliminar el elector: {str(e)}')
             raise e
+        

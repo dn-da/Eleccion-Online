@@ -1,0 +1,39 @@
+{% extends "Admin/home.html" %}
+
+{% block title %}Listar Candidatos{% endblock %}
+
+{% block dashboard_content %}
+<h1>Listar Candidatos</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Propuestas</th>
+            <th>Candidatos por Lista</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lista in listas %}
+        <tr>
+            <td>{{ lista.nombre }}</td>
+            <td>{{ lista.estado }}</td>
+            <td>
+                <ul>
+                    {% for propuesta in lista.propuestas %}
+                    <li>{{ propuesta.descripcion }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {% for candidato in lista.candidatos %}
+                    <li>{{ candidato.nombre }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

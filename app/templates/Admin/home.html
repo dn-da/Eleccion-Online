@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Página de Inicio{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="{{ url_for('home_bp.listar_candidatos') }}" class="list-group-item list-group-item-action">Listas de Candidatos</a>
+            <a href="{{ url_for('home_bp.listar_elecciones') }}" class="list-group-item list-group-item-action">Ver Elecciones</a>
+            <a href="{{ url_for('home_bp.ver_candidatos') }}" class="list-group-item list-group-item-action">Ver Candidatos</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        {% block dashboard_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

@@ -55,13 +55,12 @@
             </div>
         </div>
     </div>
+    {% if mensaje %}
+        <input type="hidden" id="mensaje" value="{{ mensaje | escape }}">
+    {% endif %}
 </div>
 {% endblock %}
 
 {% block custom_scripts %}
-{% if mensaje %}
-<script>
-    alert("{{ mensaje | escape }}");
-</script>
-{% endif %}
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 {% endblock %}
