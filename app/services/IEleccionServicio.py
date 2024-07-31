@@ -18,23 +18,19 @@ class IEleccionServicio(ABC):
         pass
     
     @abstractmethod
-    def votar(self, id_eleccion, id_candidato, id_elector):
-        pass
-    
-    @abstractmethod
-    def get_lista_by_eleccion(self, id_eleccion):
-        pass
-    
-    @abstractmethod
     def get_elector_by_email(self, email):
         pass
-    
+
+class IVotoServicio(ABC):
+    @abstractmethod
+    def get_voto_by_elector(self, id_elector):
+        pass 
     @abstractmethod
     def votar(self, id_lista, id_elector):
         pass
     
     @abstractmethod
-    def get_voto_by_elector(self, id_elector):
+    def get_all_votos(self):
         pass
 
 
@@ -51,4 +47,8 @@ class ICandidatoServicio(ABC):
 class IListaServicio(ABC):
     @abstractmethod
     def obtener_listas_pendientes(self):
+        pass
+    
+    @abstractmethod
+    def get_lista_by_eleccion(self, id_eleccion):
         pass

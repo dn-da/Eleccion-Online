@@ -13,24 +13,64 @@
             <th>Candidatos por Lista</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody>         
         {% for lista in listas %}
         <tr>
             <td>{{ lista.nombre }}</td>
             <td>{{ lista.estado }}</td>
             <td>
-                <ul>
-                    {% for propuesta in lista.propuestas %}
-                    <li>{{ propuesta.descripcion }}</li>
-                    {% endfor %}
-                </ul>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#propuestasModal{{ loop.index }}">Ver Propuestas</button>
+
+                <!-- Modal para Propuestas -->
+                <div class="modal fade" id="propuestasModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="propuestasModalLabel{{ loop.index }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="propuestasModalLabel{{ loop.index }}">Propuestas de {{ lista.nombre }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    {% for propuesta in lista.propuestas %}
+                                    <li>{{ propuesta.descripcion }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
             <td>
-                <ul>
-                    {% for candidato in lista.candidatos %}
-                    <li>{{ candidato.nombre }}</li>
-                    {% endfor %}
-                </ul>
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#candidatosModal{{ loop.index }}">Ver Candidatos</button>
+
+                <!-- Modal para Candidatos -->
+                <div class="modal fade" id="candidatosModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="candidatosModalLabel{{ loop.index }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="candidatosModalLabel{{ loop.index }}">Candidatos de {{ lista.nombre }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul>
+                                    {% for candidato in lista.candidatos %}
+                                    <li>{{ candidato.nombres }} {{ candidato.apellido_paterno }} {{ candidato.apellido_materno }} - {{ candidato.rol }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </td>
         </tr>
         {% endfor %}

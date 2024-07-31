@@ -17,5 +17,5 @@ class VotoSchema(ma.Schema):
         fields = (
             'id_voto',
             'id_elector',
-            'id_lista_candidato'
+            'id_lista'
         )

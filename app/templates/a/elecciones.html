@@ -1,0 +1,107 @@
+{% extends 'Admin/home.html' %}
+
+{% block title %}Admin Page{% endblock %}
+
+{% block dashboard_content %}
+<!-- Pestanias -->
+<div class="container">
+    <h1 class="mb-4">Candidatos</h1>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="eleccionfin-tab" data-toggle="tab" href="#eleccionfin" role="tab" aria-controls="eleccionfin" aria-selected="true">Elecciones finalizadas</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="eleccioncurso-tab" data-toggle="tab" href="#eleccioncurso" role="tab" aria-controls="eleccioncurso" aria-selected="false">Elecciones en curso</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="eleccionprog-tab" data-toggle="tab" href="#eleccionprog" role="tab" aria-controls="eleccionprog" aria-selected="false">Elecciones programadas</a>
+        </li>
+    </ul>
+    
+    <!-- Contenido de las Pestañas -->
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="eleccionfin" role="tabpanel" aria-labelledby="eleccionfin">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripcion</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>lista electoral</th>     
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for eleccionf in eleccionesf %}
+                        <tr>
+                            <td>{{ eleccionf.id_eleccion }}</td>
+                            <td>{{ eleccionf.descripcion }}</td>
+                            <td>{{ eleccionf.fecha }}</td>
+                            <td>{{ eleccionf.hora_inicio }} - {{ eleccionf.hora_fin }}</td>
+                            <td>{{ eleccionf.estado }}</td>
+                            <td><a href="{{ url_for('home_bp.ver_lista_candidatos', id=eleccionf.id_eleccion) }}">Ver</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Pestaña de Solo Propuestas -->
+        <div class="tab-pane fade" id="eleccioncurso" role="tabpanel" aria-labelledby="eleccioncurso">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripcion</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Candidatos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for eleccioncurso in eleccionescurso %}
+                        <tr>
+                            <td>{{ eleccioncurso.id_eleccion }}</td>
+                            <td>{{ eleccioncurso.descripcion }}</td>
+                            <td>{{ eleccioncurso.fecha }}</td>
+                            <td>{{ eleccioncurso.hora_inicio }} - {{ eleccioncurso.hora_final }}</td>
+                            <td>{{ eleccioncurso.estado }}</td>
+                            <td><a href="{{ url_for('home_bp.ver_lista_candidatos', id=eleccioncurso.id_eleccion) }}">Ver</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    
+        <!-- Pestaña de Precandidatos Denegados -->
+        <div class="tab-pane fade" id="eleccionprog" role="tabpanel" aria-labelledby="eleccionprog">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripcion</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th>Candidatos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for eleccionpro in eleccionespro %}
+                        <tr>
+                            <td>{{ eleccionpro.id_eleccion }}</td>
+                            <td>{{ eleccionpro.descripcion }}</td>
+                            <td>{{ eleccionpro.fecha }}</td>
+                            <td>{{ eleccionpro.hora_inicio }} - {{ eleccionpro.hora_final }}</td>
+                            <td>{{ eleccionpro.estado }}</td>
+                            <td><a href="{{ url_for('home_bp.ver_lista_candidatos', id=eleccionpro.id_eleccion) }}">Ver</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
