@@ -104,3 +104,77 @@ class ElectorService(ABC):
     def delete_elector(self, elector):
         pass
 ```
+## Estilos de programacion
+
+### 1-Restful
+- El estilo Restful se aplica en la definición de las rutas en el servidor, especialmente en la forma en que se estructuran las URLs y se manejan los métodos HTTP. En el código, se usa los metodos HTTPS GET, POST.
+```python
+@home_bp.route('/EleccionVotacion', methods=['GET'])
+@login_required
+def seleccionar_eleccion_votacion():
+    elector = eleccion_servicio.get_elector_by_email(session['correo'])
+    voto = voto_servicio.get_voto_by_elector(elector.id)
+    if voto:
+        return redirect(url_for('home_bp.dashboard'))
+    elecciones_abiertas_json = eleccion_servicio.get_all_eleccion_abiertas()
+    return render_template('ProcesoVotacion/lista_eleccion_votacion.html', data = elecciones_abiertas_json)
+
+
+@home_bp.route('/CandidatosVotacion', methods=['POST'])
+@login_required
+def ver_candidatos_votacion():
+    id_eleccion = request.form['voto']
+    candidatos = lista_servicio.get_lista_by_eleccion(id_eleccion)
+    return render_template('ProcesoVotacion/votacion.html', data = candidatos)
+
+```
+
+## 2-El estilo Error/Exception Handling 
+- Se refiere a la gestión adecuada de errores y excepciones en el código para mejorar la robustez y la facilidad de mantenimiento. En la implementación, se utiliza el try except para el metodo get_list_by_eleccion para entender el origen de un posible error.
+
+```python
+def get_lista_by_eleccion(self, id_eleccion):
+        try:
+            all_listas = db.session.query(
+                ListaCandidato.nombre, 
+                ListaCandidato.id_lista
+            ).filter(
+                ListaCandidato.id_eleccion == id_eleccion
+            ).all()
+            result = [{"nombre": tupla[0], "id_lista": tupla[1]} for tupla in all_listas]
+            return result
+        except Exception as e:
+            logger.error(f'Error al obtener las listas por elección: {str(e)}')
+            raise e
+```
+## 3-Persistence-tables
+- Uso de tablas de base de datos para almacenar y gestionar datos de manera persistente.Como el uso de ORM (Object-Relational Mapping) como SQLAlchemy para gestionar datos en una base de datos relacional.
+
+## 4-Things
+- Enfoque en la modelización de "cosas" del mundo real como objetos o entidades en el código.
+Como la programación orientada a objetos (OOP) donde se crean clases y objetos que representan entidades del mundo real.
+
+```python
+class Elector(db.Model):
+    __tablename__ = 'elector'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombres = db.Column(db.String(100), nullable=False)
+    apellido_paterno = db.Column(db.String(100), nullable=False)
+    apellido_materno = db.Column(db.String(100), nullable=False)
+    fecha_nacimiento = db.Column(db.Date, nullable=False)
+    usuario = db.Column(db.String(50), unique=True, nullable=False)
+    contrasena = db.Column(db.String(80), nullable=False)
+    correo = db.Column(db.String(100), nullable=False)
+
+    def __init__(self, nombres, apellido_paterno, apellido_materno, fecha_nacimiento, usuario, contrasena, correo):
+        self.nombres = nombres
+        self.apellido_paterno = apellido_paterno
+        self.apellido_materno = apellido_materno
+        self.fecha_nacimiento = fecha_nacimiento
+        self.usuario = usuario
+        self.contrasena = bcrypt.hashpw(contrasena.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        self.correo = correo
+```
+## 5-Trinity
+- Un enfoque que combina tres conceptos clave o componentes en el diseño del software.podemos considerar la combinación de presentación, lógica de negocio y persistencia de datos. La estructura de nuestras carpetas puede dividirse en los template, routes y los servicios.
