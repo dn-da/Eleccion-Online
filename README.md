@@ -109,24 +109,16 @@ class ElectorService(ABC):
 ### 1-Restful
 - El estilo Restful se aplica en la definición de las rutas en el servidor, especialmente en la forma en que se estructuran las URLs y se manejan los métodos HTTP. En el código, se usa los metodos HTTPS GET, POST.
 ```python
-@home_bp.route('/EleccionVotacion', methods=['GET'])
-@login_required
-def seleccionar_eleccion_votacion():
-    elector = eleccion_servicio.get_elector_by_email(session['correo'])
-    voto = voto_servicio.get_voto_by_elector(elector.id)
-    if voto:
-        return redirect(url_for('home_bp.dashboard'))
-    elecciones_abiertas_json = eleccion_servicio.get_all_eleccion_abiertas()
-    return render_template('ProcesoVotacion/lista_eleccion_votacion.html', data = elecciones_abiertas_json)
+@home_bp.route('/candidatos/<int:id>', methods=['GET'])
+def ver_lista_candidatos(id):
+    listas_candidato = lista_servicio.get_lista_por_eleccion(id)
+    return render_template('ListaCandidato/lista_candidatos.html', listas=listas_candidato)
 
-
-@home_bp.route('/CandidatosVotacion', methods=['POST'])
-@login_required
-def ver_candidatos_votacion():
-    id_eleccion = request.form['voto']
-    candidatos = lista_servicio.get_lista_by_eleccion(id_eleccion)
-    return render_template('ProcesoVotacion/votacion.html', data = candidatos)
-
+@home_bp.route('/VerListas', methods=['POST'])
+def ver_candidatos():
+    id_eleccion = request.form['eleccion_id']
+    result = lista_servicio.get_lista_by_eleccion(id_eleccion)
+    return render_template("lista_candidatos.html", data = result)
 ```
 
 ## 2-El estilo Error/Exception Handling 

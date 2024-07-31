@@ -68,9 +68,6 @@ def listar_elecciones():
 @home_bp.route('/candidatos/<int:id>', methods=['GET'])
 def ver_lista_candidatos(id):
     listas_candidato = lista_servicio.get_lista_por_eleccion(id)
-    
-    if listas_candidato is None:
-        abort(404)  
     return render_template('ListaCandidato/lista_candidatos.html', listas=listas_candidato)
 
 @home_bp.route('/VerListas', methods=['POST'])
