@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de Candidatos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registro de Candidatos</h5>
+                    <form method="post" action="{{ url_for('home_bp.listas') }}">
+                        <h6>Presidente</h6>
+                        <div class="form-group">
+                            <label for="nombre{{ 0}}">Nombre</label>
+                            <input type="text" class="form-control" id="nombre{{ 0 }}" name="nombre{{ 0 }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido_paterno{{ 0 }}">Apellido Paterno</label>
+                            <input type="text" class="form-control" id="apellido_paterno{{ 0 }}" name="apellido_paterno{{ 0 }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido_materno{{ 0 }}">Apellido Materno</label>
+                            <input type="text" class="form-control" id="apellido_materno{{ 0 }}" name="apellido_materno{{ 0 }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="dni{{ 0 }}">DNI</label>
+                            <input type="number" class="form-control" id="dni{{ 0 }}" name="dni{{ 0 }}">
+                        </div>
+                        <hr>
+                        {% for i in range(1,4) %}
+                        <h6>Candidato {{ i }}</h6>
+                        <div class="form-group">
+                            <label for="nombre{{ i }}">Nombre</label>
+                            <input type="text" class="form-control" id="nombre{{ i }}" name="nombre{{ i }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido_paterno{{ i }}">Apellido Paterno</label>
+                            <input type="text" class="form-control" id="apellido_paterno{{ i }}" name="apellido_paterno{{ i }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido_materno{{ i }}">Apellido Materno</label>
+                            <input type="text" class="form-control" id="apellido_materno{{ i }}" name="apellido_materno{{ i }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="dni{{ i }}">DNI</label>
+                            <input type="number" class="form-control" id="dni{{ i }}" name="dni{{ i }}">
+                        </div>
+                        <hr>
+                        {% endfor %}
+                        
+                        <div class="form-group">
+                            <label for="nombre_partido">Nombre del Partido</label>
+                            <input type="text" class="form-control" id="nombre_partido" name="nombre_partido">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" >Propuestas</label>
+                            <div id="propuestas-container">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" name="propuestas[]" placeholder="Propuesta">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="agregarPropuesta()">Añadir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="campana">Campaña Electoral</label>
+                            <select class="form-control" id="campana" name="camapana" >
+                                <option value="">Seleccione una elección</option>
+                                {% for eleccion in elecciones %}
+                                    <option value="{{eleccion.id_eleccion}}">{{ eleccion.descripcion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Registrar Candidatos</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block custom_scripts %}
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+{% if mensaje %}
+<script>
+    mostrarMensaje("{{ mensaje | escape }}");
+</script>
+
+{% endif %}
+{% endblock %}

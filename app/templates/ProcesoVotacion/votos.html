@@ -2,23 +2,25 @@
 {% block title %}Detalles de los votos{% endblock %}
 
 {% block content %}
-    <h2>Votos</h2>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Lista</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for voto in data %}
-            <tr>
-                <td>{{ voto.nombre_completo }}</td>
-                <td>{{ voto.nombre_lista }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h1>Detalles de los votos</h1>
+    {% for eleccion in elecciones %}
+        <h3>Votos de la lista {{ eleccion.descripcion }}</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad Votos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for votos in data[eleccion.id_eleccion] %}
+                <tr>
+                    <td>{{ votos.nombre_lista }}</td>
+                    <td>{{ votos.cant_votos }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
     <a href="{{ url_for('home_bp.dashboard') }}" class="btn btn-primary">Ir a dashboard</a>
-
 {% endblock %}

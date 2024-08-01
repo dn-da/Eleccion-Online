@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Precandidatos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Candidatos</h1>
+
+    <!-- Pestañas -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="candidatos-tab" data-toggle="tab" href="#candidatos" role="tab" aria-controls="candidatos" aria-selected="true">Candidatos y Propuestas</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="propuestas-tab" data-toggle="tab" href="#propuestas" role="tab" aria-controls="propuestas" aria-selected="false">Solo Propuestas</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="denegados-tab" data-toggle="tab" href="#denegados" role="tab" aria-controls="denegados" aria-selected="false">Precandidatos Denegados</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="inscritos-tab" data-toggle="tab" href="#inscritos" role="tab" aria-controls="inscritos" aria-selected="false">Precandidatos Inscritos</a>
+        </li>
+    </ul>
+
+    <!-- Contenido de las Pestañas -->
+    <div class="tab-content" id="myTabContent">
+        <!-- Pestaña de Candidatos y Propuestas -->
+        <div class="tab-pane fade show active" id="candidatos" role="tabpanel" aria-labelledby="candidatos-tab">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Propuestas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for candidato in candidatos %}
+                        <tr>
+                            <td>{{ candidato.id }}</td>
+                            <td>{{ candidato.nombres }}</td>
+                            <td>{{ candidato.apellido_paterno }}</td>
+                            <td>{{ candidato.apellido_materno }}</td>
+                            <td>
+                                <ul>
+                                    {% for propuesta in candidato.propuestas %}
+                                        <li>{{ propuesta.propuesta }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pestaña de Solo Propuestas -->
+        <div class="tab-pane fade" id="propuestas" role="tabpanel" aria-labelledby="propuestas-tab">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Propuesta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for candidato in candidatos %}
+                        {% for propuesta in candidato.propuestas %}
+                            <tr>
+                                <td>{{ candidato.id }}</td>
+                                <td>{{ candidato.nombres }}</td>
+                                <td>{{ propuesta.propuesta }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pestaña de Precandidatos Denegados -->
+        <div class="tab-pane fade" id="denegados" role="tabpanel" aria-labelledby="denegados-tab">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Propuestas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for precandidato in precandidatos_denegados %}
+                        <tr>
+                            <td>{{ precandidato.id }}</td>
+                            <td>{{ precandidato.nombres }}</td>
+                            <td>{{ precandidato.apellido_paterno }}</td>
+                            <td>{{ precandidato.apellido_materno }}</td>
+                            <td>
+                                <ul>
+                                    {% for propuesta in precandidato.prepropuestas %}
+                                        <li>{{ propuesta.propuesta }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pestaña de Precandidatos Inscritos -->
+        <div class="tab-pane fade" id="inscritos" role="tabpanel" aria-labelledby="inscritos-tab">
+            <table class="table table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Propuestas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for precandidato in precandidatos_inscritos %}
+                        <tr>
+                            <td>{{ precandidato.id }}</td>
+                            <td>{{ precandidato.nombres }}</td>
+                            <td>{{ precandidato.apellido_paterno }}</td>
+                            <td>{{ precandidato.apellido_materno }}</td>
+                            <td>
+                                <ul>
+                                    {% for propuesta in precandidato.prepropuestas %}
+                                        <li>{{ propuesta.propuesta }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,5 @@
-import os
-
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
@@ -13,3 +12,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
     SECRET_KEY = SECRET_KEY
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+

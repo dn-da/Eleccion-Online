@@ -53,7 +53,7 @@
 <body>
     <h3>Eliga a tu lista de preferencia:</h3>
     <div class="container">
-        <form action="{{ url_for('home_bp.votar') }}" method="post">
+        <form action="{{ url_for('home_bp.resumir_votacion') }}" method="post" id="votingForm">
             {% for lista in data %}
             <div class="candidate">
                 <div id="nombre-lista">
@@ -68,12 +68,29 @@
                 </div>
             </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary">Votar</button>
+            <button type="submit" class="btn btn-primary emitir-voto">Votar</button>
+            <a class="btn btn-primary emitir-voto" href="{{ url_for('home_bp.seleccionar_eleccion_votacion') }}" >Regresar</a>
         </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('votingForm').addEventListener('submit', function(event) {
+            const radios = document.querySelectorAll('input[name="id_lista"]');
+            let isChecked = false;
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    isChecked = true;
+                }
+            });
+            if (!isChecked) {
+                event.preventDefault();
+                alert('Por favor seleccione una lista antes de continuar.');
+            }
+        });
+    </script>
 </body>
+
 {% endblock %}

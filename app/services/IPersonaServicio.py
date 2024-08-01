@@ -16,3 +16,7 @@ class ElectorService(ABC):
     @abstractmethod
     def delete_elector(self, elector):
         pass
+    
+    @abstractmethod
+    def get_elector_by_email(self, email):
+        pass

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Candidatos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        {% for lista_candidatos in listas %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ lista_candidatos.nombre }}</h4>
+                    
+                    <!-- Candidatos -->
+                    <div class="mb-3">
+                        <h5>Candidatos</h5>
+                        {% if lista_candidatos.candidatos %}
+                        <ul class="list-group">
+                            {% for candidato in lista_candidatos.candidatos %}
+                            <li class="list-group-item">
+                                <strong>{{ candidato.nombre }}</strong>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No hay candidatos disponibles.</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Propuestas -->
+                    <div>
+                        <h5>Propuestas</h5>
+                        {% if lista_candidatos.propuestas %}
+                        <ul class="list-group">
+                            {% for propuesta in lista_candidatos.propuestas %}
+                            <li class="list-group-item">{{ propuesta.descripcion }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No hay propuestas disponibles.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

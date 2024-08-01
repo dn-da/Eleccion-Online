@@ -11,69 +11,84 @@
             <th>Estado</th>
             <th>Propuestas</th>
             <th>Candidatos por Lista</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>         
         {% for lista in listas %}
         <tr>
             <td>{{ lista.nombre }}</td>
-            <td>{{ lista.estado }}</td>
+            <td>{{ lista.estado.value }}</td>
             <td>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#propuestasModal{{ loop.index }}">Ver Propuestas</button>
+                <button type="button" class="btn btn-info" onclick="document.getElementById('propuestasDialog{{ loop.index }}').showModal()">Ver Propuestas</button>
 
-                <!-- Modal para Propuestas -->
-                <div class="modal fade" id="propuestasModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="propuestasModalLabel{{ loop.index }}" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="propuestasModalLabel{{ loop.index }}">Propuestas de {{ lista.nombre }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <ul>
-                                    {% for propuesta in lista.propuestas %}
-                                    <li>{{ propuesta.descripcion }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
+                <dialog id="propuestasDialog{{ loop.index }}" class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Propuestas de {{ lista.nombre }}</h5>
+                            <button type="button" class="close" onclick="document.getElementById('propuestasDialog{{ loop.index }}').close()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul>
+                                {% for propuesta in lista.propuestas %}
+                                <li>{{ propuesta.descripcion }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('propuestasDialog{{ loop.index }}').close()">Cerrar</button>
                         </div>
                     </div>
-                </div>
+                </dialog>
             </td>
             <td>
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#candidatosModal{{ loop.index }}">Ver Candidatos</button>
+                <button type="button" class="btn btn-info" onclick="document.getElementById('candidatosDialog{{ loop.index }}').showModal()">Ver Candidatos</button>
 
-                <!-- Modal para Candidatos -->
-                <div class="modal fade" id="candidatosModal{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="candidatosModalLabel{{ loop.index }}" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="candidatosModalLabel{{ loop.index }}">Candidatos de {{ lista.nombre }}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <ul>
-                                    {% for candidato in lista.candidatos %}
-                                    <li>{{ candidato.nombres }} {{ candidato.apellido_paterno }} {{ candidato.apellido_materno }} - {{ candidato.rol }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            </div>
+                <!-- Dialog para Candidatos -->
+                <dialog id="candidatosDialog{{ loop.index }}" class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Candidatos de {{ lista.nombre }}</h5>
+                            <button type="button" class="close" onclick="document.getElementById('candidatosDialog{{ loop.index }}').close()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <ul>
+                                {% for candidato in lista.candidatos %}
+                                <li>{{ candidato.nombres }} {{ candidato.apellido_paterno }} {{ candidato.apellido_materno }} - {{ candidato.rol }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('candidatosDialog{{ loop.index }}').close()">Cerrar</button>
                         </div>
                     </div>
-                </div>
+                </dialog>
+            </td>
+            <td>
+                {% if lista.estado.value == 'pendiente' %}
+                    <button type="button" class="btn btn-success" onclick="cambiarEstadoLista('{{ lista.id_lista }}', 'aprobar')">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="cambiarEstadoLista('{{ lista.id_lista }}', 'desaprobar')">
+                        <i class="fa fa-times"></i>
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-success" disabled>
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" disabled>
+                        <i class="fa fa-times"></i>
+                    </button>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<script src="{{ url_for('static', filename='js/actualizar_estado.js') }}"></script>
 {% endblock %}

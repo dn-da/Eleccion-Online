@@ -4,7 +4,7 @@
     position: fixed; /* Fijo en la pantalla */
     top: 0;
     left: 0;
-    background-color: #42e242; /* Color de fondo del menú */
+    background-color: #f8f9fa; /* Color de fondo del menú */
     padding-top: 20px; /* Espaciado superior */
 }
 .content {

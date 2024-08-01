@@ -3,20 +3,21 @@ from app import ma
 
 class Candidato(db.Model):
     __tablename__ = 'candidato'
-    id_candidato  = db.Column(db.Integer, primary_key=True)
+    id_candidato  = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombres = db.Column(db.String(100), nullable=False)
     apellido_paterno = db.Column(db.String(100), nullable=False)
     apellido_materno = db.Column(db.String(100), nullable=False)
     rol = db.Column(db.String(100), nullable=False)
     id_lista = db.Column(db.Integer, db.ForeignKey('lista_candidato.id_lista'),nullable=True)
+
+    lista_candidato = db.relationship('ListaCandidato', backref='candidatosl', lazy=True)
     
-    def __init__(self, nombres, apellido_paterno, apellido_materno, rol, id_lista):
+    def __init__(self, nombres, apellido_paterno, apellido_materno,rol, id_lista_candidato):
         self.nombres = nombres
         self.apellido_paterno = apellido_paterno
         self.apellido_materno = apellido_materno
         self.rol = rol
-        self.id_lista = id_lista
-    
+        self.id_lista = id_lista_candidato
     
 class CandidatoSchema(ma.Schema):
     class Meta:

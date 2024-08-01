@@ -1,0 +1,57 @@
+{% extends "Admin/home.html" %}
+{% block title %}Listar Candidatos{% endblock %}
+{% block dashboard_content %}
+<h1>Listar Candidatos</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Propuestas</th>
+            <th>Candidatos por Lista</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lista in listas %}
+        <tr>
+            <td>{{ lista.nombre }}</td>
+            <td>{{ lista.estado }}</td>
+            <td>
+                <ul>
+                    {% for propuesta in lista.propuestas %}
+                    <li>{{ propuesta.descripcion }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    {% for candidato in lista.candidatos %}
+                    <li>{{ candidato.nombre }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                {% if lista.estado == 'pendiente' %}
+                    <button type="button" class="btn btn-success" onclick="cambiarEstadoLista('{{ lista.id_lista }}', 'aprobar')">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="cambiarEstadoLista('{{ lista.id_lista }}', 'desaprobar')">
+                        <i class="fa fa-times"></i>
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-success" disabled>
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" disabled>
+                        <i class="fa fa-times"></i>
+                    </button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script src="{{ url_for('static', filename='js/actualizar_estado.js') }}"></script>
+{% endblock %}

@@ -3,6 +3,7 @@ import logging
 from app.models.Elector import Elector
 from app import db
 from app.services.IPersonaServicio import ElectorService
+from sqlalchemy.exc import IntegrityError
 
 logger = logging.getLogger(__name__)
 
@@ -29,10 +30,10 @@ class ElectorServiceImpl(ElectorService):
             db.session.commit()
             logger.info(f'Elector creado correctamente: {elector}')
             return elector
-        except Exception as e:
+        except IntegrityError as e:
             db.session.rollback()
-            logger.error(f'Error al crear el electbor: {str(e)}')
-            raise e
+            logger.error(f'Error al crear el elector: {str(e)}')
+            raise ValueError("Error al crear el elector: ya existe un elector con este correo.:")
 
     def update_elector(self, elector: Elector):
         try:
@@ -54,3 +55,10 @@ class ElectorServiceImpl(ElectorService):
             logger.error(f'Error al eliminar el elector: {str(e)}')
             raise e
         
+    def get_elector_by_email(self, email):
+        try:
+            elector = Elector.query.filter_by(correo=email).first()
+            return elector
+        except Exception as e:
+            logger.error(f'Error al obtener el elector por email: {str(e)}')
+            raise e

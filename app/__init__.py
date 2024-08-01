@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow 
+
+import logging
 from app.config import Config
+
+from dotenv import load_dotenv
+import os
 
 
 load_dotenv()

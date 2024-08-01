@@ -66,7 +66,7 @@
                             <td>{{ eleccioncurso.id_eleccion }}</td>
                             <td>{{ eleccioncurso.descripcion }}</td>
                             <td>{{ eleccioncurso.fecha }}</td>
-                            <td>{{ eleccioncurso.hora_inicio }} - {{ eleccioncurso.hora_final }}</td>
+                            <td>{{ eleccioncurso.hora_inicio }} - {{ eleccioncurso.hora_fin }}</td>
                             <td>{{ eleccioncurso.estado }}</td>
                             <td><a href="{{ url_for('home_bp.ver_lista_candidatos', id=eleccioncurso.id_eleccion) }}">Ver</a></td>
                         </tr>
@@ -94,7 +94,7 @@
                             <td>{{ eleccionpro.id_eleccion }}</td>
                             <td>{{ eleccionpro.descripcion }}</td>
                             <td>{{ eleccionpro.fecha }}</td>
-                            <td>{{ eleccionpro.hora_inicio }} - {{ eleccionpro.hora_final }}</td>
+                            <td>{{ eleccionpro.hora_inicio }} - {{ eleccionpro.hora_fin }}</td>
                             <td>{{ eleccionpro.estado }}</td>
                             <td><a href="{{ url_for('home_bp.ver_lista_candidatos', id=eleccionpro.id_eleccion) }}">Ver</a></td>
                         </tr>

@@ -46,14 +46,27 @@
         background-color: #0056b3;
         border-color: #004085;
     }
+    .emitir-regresar{
+        background-color: #596169;
+        border-color: #18191a;
+        color: white;
+        padding: 10px 20px;
+        width: 100%;
+        border-radius: 10px;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+    .emitir-regresar:hover {
+        background-color: #596169;
+        border-color: #18191a;
+    }
 
 </style>
 {% endblock %}
 {% block content %}
 <body>
-    <h3>Eliga la eleccion en la que participara:</h3>
+    <h3>Elija la eleccion en la que participara:</h3>
     <div class="container">
-        <form action="{{ url_for('home_bp.ver_candidatos_votacion') }}" method="post">
+        <form id="votingForm" action="{{ url_for('home_bp.ver_candidatos_votacion') }}" method="post">
             {% for eleccion in data %}
             <div class="candidate">
                 <div id="nombre-eleccion">
@@ -64,17 +77,46 @@
                     <p>Inicio: {{ eleccion.hora_inicio }} </p>       
                     <p>Fin:  {{ eleccion.hora_fin }} </p>
                 </div>
+                {% if eleccion.id_eleccion not in elecciones_hechas %}
                 <div class="option">
                     <input type="radio" name="voto" id="{{ eleccion.id_eleccion }}" value="{{ eleccion.id_eleccion }}">
                 </div>
+                {% else %}
+                <div class="option">
+                    <h5>Usted ya voto en esta eleccion</h5>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
+            {% if elecciones_restantes != 0 %}
             <button type="submit" class="btn btn-primary emitir-voto">Continuar con la votación</button>
+            <a class="btn btn-primary emitir-voto" href="{{ url_for('home_bp.dashboard') }}" >Ir a Dashboard</a>
+
+            {% else %}
+            <h5>Usted ya voto en todas las elecciones</h5>
+            <a href="{{ url_for('home_bp.dashboard') }}" class="btn btn-primary">Ir a dashboard</a>
+            {% endif %}
         </form>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('votingForm').addEventListener('submit', function(event) {
+            const radios = document.querySelectorAll('input[name="voto"]');
+            let isChecked = false;
+            radios.forEach(radio => {
+                if (radio.checked) {
+                    isChecked = true;
+                }
+            });
+            if (!isChecked) {
+                event.preventDefault();
+                alert('Por favor seleccione una elección antes de continuar.');
+            }
+        });
+    </script>
 </body>
+
 {% endblock %}
