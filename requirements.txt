@@ -7,3 +7,4 @@ pymysql
 bcrypt
 marshmallow-sqlalchemy
 Flask-Login
+cryptography
